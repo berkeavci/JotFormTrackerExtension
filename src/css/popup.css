@@ -1,0 +1,17 @@
+body{
+    width: 600px;
+}
+div{
+    size: 400px;
+}
+#record_btn{
+    height: 30px;
+    width: 100px;
+    outline: none;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}
+#record_btn:active{
+    background-color: olive;
+}
