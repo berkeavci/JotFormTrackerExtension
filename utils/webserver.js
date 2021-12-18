@@ -11,7 +11,7 @@ for (var entryName in config.entry) {
   if (excludeEntriesToHotReload.indexOf(entryName) === -1) {
     config.entry[entryName] =
       [
-        ("webpack-dev-server/client?http://localhost:" + 3000),
+        ("webpack-dev-server/client?http://localhost:" + 80),
         "webpack/hot/dev-server"
       ].concat(config.entry[entryName]);
   }
@@ -32,7 +32,6 @@ var server =
     headers: {
       "Access-Control-Allow-Origin": "*"
     },
-    disableHostCheck: true
   });
 
-server.listen(env.PORT);
+server.listen();

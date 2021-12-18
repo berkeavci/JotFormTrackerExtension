@@ -1,0 +1,1 @@
+My personal notes during the phase of project. Nothing useful for anyone except me ;). 

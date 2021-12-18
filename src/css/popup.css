@@ -15,3 +15,15 @@ div{
 #record_btn:active{
     background-color: olive;
 }
+#stop_btn{
+    height: 30px;
+    width: 100px;
+    outline: none;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    color: aqua;
+}
+#stop_btn:active{
+    background-color: olive;
+}

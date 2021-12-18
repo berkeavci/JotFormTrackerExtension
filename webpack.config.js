@@ -24,16 +24,18 @@ var options = {
   entry: {
     popup: path.join(__dirname, "src", "js", "popup.js"),
     background: path.join(__dirname, "src", "js", "background.js"),
-    content_script_js: "./src/js/content.js"
+    content_script_js: path.join(__dirname, "src", "js", "content.js"),
   },
-
+  
   node: {
     fs: "empty"
   },
 
   devServer: { 
-    disableHostCheck: true,
-    overlay: true
+    allowedHosts: "all",
+    overlay: true,
+    host: 'localhost',
+    socket: 'socket',
   },
 
   chromeExtensionBoilerplate: {

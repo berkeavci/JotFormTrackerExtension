@@ -1,10 +1,14 @@
 {
   "name": "test-tracker-extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Test for Click Tracker Extension",
   "scripts": {
     "build": "node utils/build.js",
     "start": "node utils/webserver.js"
+  },
+  "jest": {
+    "verbose": true,
+    "preset": "jest-puppeteer"
   },
   "devDependencies": {
     "clean-webpack-plugin": "3.0.0",
@@ -14,10 +18,16 @@
     "fs-extra": "8.1.0",
     "html-loader": "0.5.5",
     "html-webpack-plugin": "3.2.0",
+    "jest-puppeteer": "^6.0.0",
     "style-loader": "1.0.0",
     "webpack": "4.41.2",
-    "webpack-dev-server": "3.9.0",
     "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.9.0",
     "write-file-webpack-plugin": "4.5.1"
+  },
+  "dependencies": {
+    "@reactivex/rxjs": "^6.6.7",
+    "puppeteer": "^10.4.0",
+    "rxjs": "^7.4.0"
   }
 }

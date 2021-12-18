@@ -1,6 +1,6 @@
 {
   "name": "Click Tracker Extension",
-  "permissions": ["storage", "scripting",  "tabs"],
+  "permissions": ["storage", "scripting", "tabs", "downloads", "activeTab"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
@@ -15,10 +15,18 @@
       "run_at": "document_start"
     }
   ],
+  "commands": {
+      "start": {
+         "suggested_key": "Ctrl+Shift+S",
+         "description": "Start Recording"
+      },
+      "stop": {
+         "suggested_key": "Ctrl+Shift+P",
+         "description": "Stopped Recording"
+      }
+  },
   "manifest_version": 3,
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   }
-
-  
 }
