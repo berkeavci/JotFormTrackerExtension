@@ -24,6 +24,3 @@ TODOS :
              -> When test enters, application search for a, button and input counts IF IS FORM REQUEST TRUE. Then
              ...Gives the counts and ask for randomization. If no do test until isFormRequest. If yes, then in the order ask
              ...a, button and inputs percentages and save the data in the json file. on the code, do the test until formrequest. then read json and get the number of selectors randomization and check selectors randomly.              
-- New TODO Area : 
-      - Unsubcribe shortcut taps
-      - Prevent Another request from ctrl + shift + r

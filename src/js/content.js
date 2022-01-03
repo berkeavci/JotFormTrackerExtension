@@ -9,12 +9,15 @@ import { exportInputs  } from "./downloadOperation/download"
 import { localStorageSave, getLocalStorageData, storageClear } from "./handleLocalStorage/localStorageHandler"
 import { shortcut } from "./components/shortcut";
 import { records, temp_rec } from "./components/recordsPlaceHolder";
+import { isJsonAdded } from "./handleJson/jsonCheck";
 
 const stopShortcut$ = shortcut(["ControlLeft", "ShiftLeft", "KeyP"]); 
 const formReqShortcut$ = shortcut(["ControlLeft", "ShiftLeft", "KeyR"]);
 
+
 formReqShortcut$.pipe(tap(async(x) => 
 {
+  console.log(recordData);
   console.log("Form Data Requested");
   recordData = await addRequestDoctoJson(document, recordData);
   localStorageSave(recordData);
@@ -27,39 +30,51 @@ function handleShortcut(x) {
   recordData = JSON.stringify(temp_rec);
   recordData = JSON.parse(recordData);
   numberOfInside = 0;
-  console.log(x);
+  subHolder = false;
   console.log("Shortcut?????");
 }
 
 let numberOfInside = 0;
 var documentClick$ = fromEvent(document, "click");
-var docClicks = null;
+var downEvent$ = fromEvent(document, "mousedown");
+//var docClicks = null;
 let recordData = null;
+var subHolder = false;
 
 
 // Starts from here
 chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
   console.log("Listener Started");
   if (request.method == "Recording") {
-    subtoDoc();
+    console.log("Recording?");
+    console.log(subHolder);
+    if(subHolder == false) 
+      subtoDoc();
+    subHolder = true;
   } else if (request.method == "Stopped") {
     console.log("Stop Sign Clicked");
+    subHolder = false;
     stopSub();
   } else if (request.method == "TabUpdated") {
-    if(request.state == "record") {
-      subtoDoc();
-    }
     recordData = await getLocalStorageData(records, numberOfInside);
-    console.log(recordData);
+    if(request.state == "record") {
+      console.log(recordData);
+      subtoDoc();
+      recordData = isJsonAdded(recordData, request.url);
+    }
+    
   }
 });
 
 function subtoDoc() {
-  docClicks = documentClick$.pipe(takeUntil(stopShortcut$), delay(600)).subscribe((x) => {
+  console.log("Recording");
+  downEvent$.pipe(takeUntil(stopShortcut$), delay(600)).subscribe((x) => {
+    console.log(x);
     clickActions(x);
   });
 }
 function stopSub() {
+  subHolder = false;
   console.log(recordData);
   exportInputs(recordData);
   recordData = JSON.stringify(temp_rec);
@@ -68,7 +83,6 @@ function stopSub() {
 }
 
 async function clickActions(value) {
-  console.log(recordData);
   let typeOfClickOperation = "";
   let inputValue = "";
   if (value.target instanceof HTMLInputElement) {
@@ -82,6 +96,7 @@ async function clickActions(value) {
       inputValue
     );
   } else if (value.target instanceof HTMLAnchorElement) {
+    console.log("SelamKanka");
     typeOfClickOperation = "a";
     addDatatoJson(
       numberOfInside,
@@ -101,6 +116,16 @@ async function clickActions(value) {
     );
   } else if (value.target instanceof HTMLSpanElement){
     typeOfClickOperation = "span";
+    addDatatoJson(
+      numberOfInside,
+      value,
+      recordData,
+      typeOfClickOperation,
+      inputValue
+    );
+  }
+  else if (value.target instanceof HTMLDivElement){
+    typeOfClickOperation = "div";
     addDatatoJson(
       numberOfInside,
       value,

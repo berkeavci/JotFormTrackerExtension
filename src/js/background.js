@@ -8,6 +8,8 @@ function messageSender(message) {
   });
 }
 
+
+
 chrome.commands.onCommand.addListener((command) => {
   console.log("Command Catched!");
   var message = "";
@@ -17,6 +19,7 @@ chrome.commands.onCommand.addListener((command) => {
     console.log(message);
     messageSender(message);
   } else if (command === "stop") {
+    console.log(message);
     isRecord = false;
     message = "Stopped";
     messageSender(message);
@@ -25,10 +28,12 @@ chrome.commands.onCommand.addListener((command) => {
 
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  console.log(isRecord);
   if (changeInfo.status === "complete") {
     chrome.tabs.sendMessage(tabId, {
       method: "TabUpdated",
-      state: isRecord ? "record" : "notrecording"
+      state: isRecord ? "record" : "notrecording",
+      url : tab.url
     });
   }
 });

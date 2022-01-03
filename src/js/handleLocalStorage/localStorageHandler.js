@@ -1,3 +1,5 @@
+import { temp_rec } from "../components/recordsPlaceHolder";
+
 function isObjEmpty(obj) {
   for (var i in obj) return false;
   return true;
@@ -27,13 +29,15 @@ function localStorageSave(data) {
 function getLocalStorageData(records, numberOfInside) {
   return new Promise(function (resolve, reject){
   chrome.storage.sync.get("recordData", function (x) {
-    console.log(x.recordData);
     if (!isObjEmpty(x)) {
+      console.log(x["recordData"])
       numberOfInside = 1;
       records = JSON.stringify(x["recordData"]);
       records = JSON.parse(JSON.parse(records));
       console.log(records);
       resolve(records);
+    }else {
+      resolve(temp_rec);
     }
   });
   }).then( result => {
